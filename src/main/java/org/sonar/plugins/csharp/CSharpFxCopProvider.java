@@ -49,6 +49,7 @@ public class CSharpFxCopProvider {
   private static final String FXCOP_DIRECTORIES_PROPERTY_KEY = "sonar.cs.fxcop.directories";
   private static final String FXCOP_REFERENCES_PROPERTY_KEY = "sonar.cs.fxcop.references";
   private static final String FXCOP_REPORT_PATH_PROPERTY_KEY = "sonar.cs.fxcop.reportPath";
+  public static final String FXCOP_DICTIONARY_PROPERTY_KEY = "sonar.cs.fxcop.dictionaryPath";
 
   private static final FxCopConfiguration FXCOP_CONF = new FxCopConfiguration(
     CSharpPlugin.LANGUAGE_KEY,
@@ -113,6 +114,13 @@ public class CSharpFxCopProvider {
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
+        .build(),
+        PropertyDefinition.builder(FXCOP_DICTIONARY_PROPERTY_KEY)
+        .name("Optional spelling dictionary")
+        .description("Comma-separated list of referenced assemblies to pass to FxCop. Example: c:/MyLibrary.dll")
+        .category(CATEGORY)
+        .subCategory(SUBCATEGORY)
+        .onQualifiers(Qualifiers.PROJECT)
         .build());
   }
 
@@ -139,12 +147,5 @@ public class CSharpFxCopProvider {
 
   }
 
-  public static class CSharpFxCopSensor extends FxCopSensor {
-
-    public CSharpFxCopSensor(Settings settings, RulesProfile profile, FileSystem fs, ResourcePerspectives perspectives) {
-      super(FXCOP_CONF, settings, profile, fs, perspectives);
-    }
-
-  }
 
 }
