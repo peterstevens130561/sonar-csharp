@@ -42,14 +42,14 @@ public class CSharpFxCopProvider {
     ".NET projects with help of the MSBuild Runner. If the old deprecated Visual Studio Bootstrapper plugin is still used along with SonarRunner to analyse .NET projects, " +
     "moving to the MSBuild Runner should be scheduled because one day the backward support of the Visual Studio Boostrapper plugin will be dropped.";
 
-  private static final String FXCOP_ASSEMBLIES_PROPERTY_KEY = "sonar.cs.fxcop.assembly";
-  private static final String FXCOP_FXCOPCMD_PATH_PROPERTY_KEY = "sonar.cs.fxcop.fxCopCmdPath";
-  private static final String FXCOP_TIMEOUT_PROPERTY_KEY = "sonar.cs.fxcop.timeoutMinutes";
-  private static final String FXCOP_ASPNET_PROPERTY_KEY = "sonar.cs.fxcop.aspnet";
-  private static final String FXCOP_DIRECTORIES_PROPERTY_KEY = "sonar.cs.fxcop.directories";
-  private static final String FXCOP_REFERENCES_PROPERTY_KEY = "sonar.cs.fxcop.references";
-  private static final String FXCOP_REPORT_PATH_PROPERTY_KEY = "sonar.cs.fxcop.reportPath";
-  public static final String FXCOP_DICTIONARY_PROPERTY_KEY = "sonar.cs.fxcop.dictionaryPath";
+   static final String FXCOP_ASSEMBLIES_PROPERTY_KEY = "sonar.cs.fxcop.assembly";
+   static final String FXCOP_FXCOPCMD_PATH_PROPERTY_KEY = "sonar.cs.fxcop.fxCopCmdPath";
+   static final String FXCOP_TIMEOUT_PROPERTY_KEY = "sonar.cs.fxcop.timeoutMinutes";
+   static final String FXCOP_ASPNET_PROPERTY_KEY = "sonar.cs.fxcop.aspnet";
+   static final String FXCOP_DIRECTORIES_PROPERTY_KEY = "sonar.cs.fxcop.directories";
+   static final String FXCOP_REFERENCES_PROPERTY_KEY = "sonar.cs.fxcop.references";
+   static final String FXCOP_REPORT_PATH_PROPERTY_KEY = "sonar.cs.fxcop.reportPath";
+   static final String FXCOP_DICTIONARY_PROPERTY_KEY = "sonar.cs.fxcop.dictionaryPath";
 
   private static final FxCopConfiguration FXCOP_CONF = new FxCopConfiguration(
     CSharpPlugin.LANGUAGE_KEY,
@@ -62,6 +62,10 @@ public class CSharpFxCopProvider {
     FXCOP_REFERENCES_PROPERTY_KEY,
     FXCOP_REPORT_PATH_PROPERTY_KEY);
 
+  public static FxCopConfiguration getConfiguration() {
+	  return FXCOP_CONF;
+  }
+  
   private CSharpFxCopProvider() {
   }
 
@@ -117,7 +121,7 @@ public class CSharpFxCopProvider {
         .build(),
         PropertyDefinition.builder(FXCOP_DICTIONARY_PROPERTY_KEY)
         .name("Optional spelling dictionary")
-        .description("Comma-separated list of referenced assemblies to pass to FxCop. Example: c:/MyLibrary.dll")
+        .description("Optional path to spelling dictionary")
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .onQualifiers(Qualifiers.PROJECT)

@@ -1,3 +1,22 @@
+/*
+ * SonarQube C# Plugin
+ * Copyright (C) 2014 SonarSource
+ * sonarqube@googlegroups.com
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ */
 package org.sonar.plugins.csharp;
 
 import java.io.File;
@@ -20,7 +39,6 @@ import org.sonar.api.resources.Project;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.plugins.fxcop.FxCopConfiguration;
-//import org.sonar.plugins.fxcop.FxCopExecutor;
 import org.sonar.plugins.fxcop.FxCopIssue;
 import org.sonar.plugins.fxcop.FxCopReportParser;
 import org.sonar.plugins.fxcop.FxCopRulesetWriter;
@@ -37,14 +55,13 @@ public class CSharpFxCopSensor implements Sensor {
 	  private static final String CUSTOM_RULE_CHECK_ID_PARAMETER = "CheckId";
 	  private static final Logger LOG = LoggerFactory.getLogger(FxCopSensor.class);
 
-	  private final FxCopConfiguration fxCopConf;
 	  private final Settings settings;
 	  private final RulesProfile profile;
 	  private final FileSystem fs;
 	  private final ResourcePerspectives perspectives;
+	  private final FxCopConfiguration fxCopConf=CSharpFxCopProvider.getConfiguration();
 
-	  public CSharpFxCopSensor(FxCopConfiguration fxCopConf, Settings settings, RulesProfile profile, FileSystem fs, ResourcePerspectives perspectives) {
-	    this.fxCopConf = fxCopConf;
+	  public CSharpFxCopSensor( Settings settings, RulesProfile profile, FileSystem fs, ResourcePerspectives perspectives) {
 	    this.settings = settings;
 	    this.profile = profile;
 	    this.fs = fs;
@@ -143,6 +160,9 @@ public class CSharpFxCopSensor implements Sensor {
 	      
 	      List<String> references=splitOnCommas(settings.getString(fxCopConf.referencesPropertyKey()));
 	      fxCopRunner.setReferences(references);
+	      
+	      String dictionaryPath=settings.getString(CSharpFxCopProvider.FXCOP_DICTIONARY_PROPERTY_KEY);
+	      fxCopRunner.setDictionary(dictionaryPath);
 	      
 	      fxCopRunner.execute();
 		return reportFile;

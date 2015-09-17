@@ -1,7 +1,7 @@
 /*
- * SonarQube FxCop Library
+ * SonarQube C# Plugin
  * Copyright (C) 2014 SonarSource
- * dev@sonar.codehaus.org
+ * sonarqube@googlegroups.com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,6 +21,7 @@ package org.sonar.plugins.csharp;
 
 import com.google.common.base.Preconditions;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.utils.command.Command;
@@ -81,25 +82,7 @@ private List<String> references;
   }
   
   public void execute() {
-    Command command = Command.create(getExecutable(executable))
-      .addArgument("/file:" + assemblies)
-      .addArgument("/ruleset:=" + rulesetFile.getAbsolutePath())
-      .addArgument("/out:" + reportFile.getAbsolutePath())
-      .addArgument("/outxsl:none")
-      .addArgument("/forceoutput")
-      .addArgument("/searchgac");
-
-    if (aspnet) {
-      command.addArgument("/aspnet");
-    }
-
-    for (String directory : directories) {
-      command.addArgument("/directory:" + directory);
-    }
-    for (String reference : references) {
-      command.addArgument("/reference:" + reference);
-    }
-
+	  Command command=build();
     int exitCode = CommandExecutor.create().execute(
       command,
       TimeUnit.MINUTES.toMillis(timeout));
@@ -110,6 +93,31 @@ private List<String> references;
       "The execution of \"" + executable + "\" failed and returned " + exitCode
         + " as exit code. See http://msdn.microsoft.com/en-us/library/bb429400(v=vs.80).aspx for details.");
   }
+  
+	public Command build() {
+		Command command = Command.create(getExecutable(executable))
+				.addArgument("/file:" + assemblies)
+				.addArgument("/ruleset:=" + rulesetFile.getAbsolutePath())
+				.addArgument("/out:" + reportFile.getAbsolutePath())
+				.addArgument("/outxsl:none").addArgument("/forceoutput")
+				.addArgument("/searchgac");
+
+		if (aspnet) {
+			command.addArgument("/aspnet");
+		}
+
+		for (String directory : directories) {
+			command.addArgument("/directory:" + directory);
+		}
+		for (String reference : references) {
+			command.addArgument("/reference:" + reference);
+		}
+
+		if (!StringUtils.isEmpty(dictionaryPath)) {
+			command.addArgument("/dictionary:" + dictionaryPath);
+		}
+		return command;
+	}
 
   /**
    * Handles deprecated property: "installDirectory", which gives the path to the directory only.
