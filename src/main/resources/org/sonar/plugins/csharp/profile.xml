@@ -5,11 +5,27 @@
   <rules>
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
-      <key>S3254</key>
+      <key>BHI1008</key>
     </rule>
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
-      <key>S3240</key>
+      <key>BHI1007</key>
+    </rule>
+    <rule>
+      <repositoryKey>csharpsquid</repositoryKey>
+      <key>BHI1006</key>
+    </rule>
+    <rule>
+      <repositoryKey>csharpsquid</repositoryKey>
+      <key>BHI1005</key>
+    </rule>
+    <rule>
+      <repositoryKey>csharpsquid</repositoryKey>
+      <key>BHI1002</key>
+    </rule>
+    <rule>
+      <repositoryKey>csharpsquid</repositoryKey>
+      <key>BHI1004</key>
     </rule>
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
@@ -30,6 +46,10 @@
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
       <key>S3052</key>
+    </rule>
+    <rule>
+      <repositoryKey>csharpsquid</repositoryKey>
+      <key>BHI1000</key>
     </rule>
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
@@ -213,10 +233,6 @@
     </rule>
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
-      <key>S1940</key>
-    </rule>
-    <rule>
-      <repositoryKey>csharpsquid</repositoryKey>
       <key>S2758</key>
     </rule>
     <rule>
@@ -314,6 +330,10 @@
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>
       <key>S1481</key>
+    </rule>
+    <rule>
+      <repositoryKey>csharpsquid</repositoryKey>
+      <key>BHI1001</key>
     </rule>
     <rule>
       <repositoryKey>csharpsquid</repositoryKey>

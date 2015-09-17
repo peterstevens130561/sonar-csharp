@@ -1,82 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <rules>
   <rule>
-    <key>S3254</key>
-    <name>Default parameter values should not be passed as arguments</name>
-    <severity>MINOR</severity>
+    <key>BHI1008</key>
+    <name>Do not comment out Assert in tests</name>
+    <severity>CRITICAL</severity>
     <cardinality>SINGLE</cardinality>
     <description><![CDATA[<p>
-    Specifying the default parameter values in a method call is redundant. Such values should be omitted in the interests of readability.
-</p>
+Do not comment out Asserts / Should
+    </p>
 
-<h2>Noncompliant Code Example</h2>
-<pre>
-public void M(int x, int y = 5, int z = 7) { /* ... */ }
 
-// ...
-M(1, 5); //Noncompliant, y has the default value
-M(1, z: 7); //Noncompliant, z has the default value
-</pre>
-
-<h2>Compliant Solution</h2>
-<pre>
-public void M(int x, int y=5, int z = 7) { /* ... */ }
-
-// ...
-M(1);
-M(1);
-</pre>
 ]]></description>
-    <tag>clumsy</tag>
+    <tag>reliability</tag>
+    <tag>testability</tag>
   </rule>
   <rule>
-    <key>S3240</key>
-    <name>The simplest possible condition syntax should be used</name>
-    <severity>MINOR</severity>
+    <key>BHI1007</key>
+    <name>Possible string localization</name>
+    <severity>CRITICAL</severity>
     <cardinality>SINGLE</cardinality>
     <description><![CDATA[<p>
-    In the interests of keeping code clean, the simplest possible conditional syntax should be used. That means using
-    the <code>??</code> operator for an assign-if-not-null operator, and using the ternary operator <code>?:</code> for
-    assignment to a single variable.
+Consider localizing your literal string. If the string should not be localized, prefix with @
+    </p>
+
+]]></description>
+    <tag>bug</tag>
+  </rule>
+  <rule>
+    <key>BHI1006</key>
+    <name>Regions should not be used in declarations</name>
+    <severity>MAJOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <description><![CDATA[<p>
+#Regions are a smell that your class is doing too many things.
 </p>
 
-<h2>Noncompliant Code Sample</h2>
-<pre>
-object a = null, b = null, x;
+]]></description>
+    <tag>oldstyle</tag>
+  </rule>
+  <rule>
+    <key>BHI1005</key>
+    <name>Regions may not be used in methods</name>
+    <severity>CRITICAL</severity>
+    <cardinality>SINGLE</cardinality>
+    <description><![CDATA[<p>
+#Regions are old fashioned. IF you need a region your class is probably too big
+</p>
 
-if (a != null) // Noncompliant; needlessly verbose
-{
-  x = a;
-}
-else
-{
-  x = b;
-}
-
-x = a != null ? a : b; // Noncompliant; better but could still be simplified
-
-x = (a == null) ? new object() : a; // Noncompliant
-
-if (condition) // Noncompliant
-{
-  x = a;
-}
-else
-{
-  x = b;
-}
-</pre>
-
-<h2>Compliant Solution</h2>
-<pre>
-object x;
-
-x = a ?? b;
-x = a ?? b;
-x = a ?? new object();
-x = condition ? a : b;
-</pre>]]></description>
-    <tag>clumsy</tag>
+]]></description>
+    <tag>oldstyle</tag>
+  </rule>
+  <rule>
+    <key>BHI1002</key>
+    <name>Can't compare with Double.NaN</name>
+    <severity>BLOCKER</severity>
+    <cardinality>SINGLE</cardinality>
+    <description><![CDATA[<p>
+Double.NaN is not equal to anything, use Double.IsNaN
+</p>
+]]></description>
+    <tag>bug</tag>
+  </rule>
+  <rule>
+    <key>BHI1004</key>
+    <name>conditional compilation is banned</name>
+    <severity>BLOCKER</severity>
+    <cardinality>SINGLE</cardinality>
+    <description><![CDATA[<p>
+Condition compilation is really an anti-pattern.</p>
+    <dl>
+        <li><
+It's nearly impossible to test in a meaningful way because the code depends on the environment
+        </li>
+        <li>
+It's very dangerous to make edits because you have to test your change under so many different conditions
+            </li>
+        <li>
+It's hard to read the code because you have to know the value of many external factors
+                </li>
+        <li>
+The combinatorial complexity of all these flags makes a large number of configurations that have to be reasoned about
+            </li>
+        <li>
+You have to recompile a large amount of code to see if you broke anything
+            </li>
+    </dl>
+]]></description>
+    <tag>ancient</tag>
   </rule>
   <rule>
     <key>S3218</key>
@@ -289,6 +299,18 @@ class X
 </pre>
 ]]></description>
     <tag>convention</tag>
+  </rule>
+  <rule>
+    <key>BHI1000</key>
+    <name>// TODO:: should be done at a certain moment</name>
+    <severity>MAJOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <description><![CDATA[<p>
+Descriptot for rule BHI1000
+</p>
+]]></description>
+    <tag>misra</tag>
+    <tag>unused</tag>
   </rule>
   <rule>
     <key>S2761</key>
@@ -2770,7 +2792,7 @@ public void doTheThing()
   <rule>
     <key>S1940</key>
     <name>Boolean checks should not be inverted</name>
-    <severity>MINOR</severity>
+    <severity>MAJOR</severity>
     <cardinality>SINGLE</cardinality>
     <description><![CDATA[<p>
     It is needlessly complex to invert the result of a boolean comparison. The opposite comparison should be made instead.
@@ -4058,11 +4080,11 @@ So the use of tabulation character must be banned.
   </rule>
   <rule>
     <key>S1125</key>
-    <name>Boolean literals should not be redundant</name>
+    <name>Literal boolean values should not be used in condition expressions</name>
     <severity>MINOR</severity>
     <cardinality>SINGLE</cardinality>
     <description><![CDATA[<p>
-    Redundant Boolean literals should be removed from expressions to improve readability.
+Remove literal boolean values from conditional expressions to improve readability. Anything that can be tested for equality with a boolean value must itself be a boolean value, and boolean values can be tested atomically.
 </p>
 
 <h2>Noncompliant Code Example</h2>
@@ -4176,6 +4198,24 @@ if (condition)
     <tag>cwe</tag>
     <tag>misra</tag>
     <tag>pitfall</tag>
+  </rule>
+  <rule>
+    <key>BHI1001</key>
+    <name>Field names should comply with a naming convention</name>
+    <severity>MINOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <description><![CDATA[<p>
+Field names should follow a naming convention
+</p>
+
+]]></description>
+    <tag>convention</tag>
+    <param>
+      <key>format</key>
+      <description><![CDATA[Regular expression used to check the field names against.]]></description>
+      <type>STRING</type>
+      <defaultValue>^(m_[A-Z][a-zA-Z0-9]+)$</defaultValue>
+    </param>
   </rule>
   <rule>
     <key>S101</key>

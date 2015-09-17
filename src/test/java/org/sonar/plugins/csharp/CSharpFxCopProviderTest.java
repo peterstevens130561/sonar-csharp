@@ -23,7 +23,6 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.plugins.csharp.CSharpFxCopProvider.CSharpFxCopRulesDefinition;
-import org.sonar.plugins.csharp.CSharpFxCopProvider.CSharpFxCopSensor;
 
 import java.util.List;
 import java.util.Set;
@@ -43,7 +42,8 @@ public class CSharpFxCopProviderTest {
       "sonar.cs.fxcop.fxCopCmdPath",
       "sonar.cs.fxcop.aspnet",
       "sonar.cs.fxcop.directories",
-      "sonar.cs.fxcop.references");
+      "sonar.cs.fxcop.references",
+      "sonar.cs.fxcop.dictionaryPath");
   }
 
   private static Set<String> nonProperties(List extensions) {
