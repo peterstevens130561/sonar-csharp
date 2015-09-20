@@ -21,7 +21,9 @@ package org.sonar.plugins.csharp;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -38,6 +40,8 @@ import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rules.ActiveRule;
+import org.sonar.api.utils.command.Command;
+import org.sonar.api.utils.command.CommandExecutor;
 import org.sonar.plugins.fxcop.FxCopConfiguration;
 import org.sonar.plugins.fxcop.FxCopIssue;
 import org.sonar.plugins.fxcop.FxCopReportParser;
@@ -45,6 +49,7 @@ import org.sonar.plugins.fxcop.FxCopRulesetWriter;
 import org.sonar.plugins.fxcop.FxCopSensor;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 
@@ -90,11 +95,11 @@ public class CSharpFxCopSensor implements Sensor {
 
 	  @Override
 	  public void analyse(Project project, SensorContext context) {
-	    analyse(context, new FxCopRulesetWriter(), new FxCopReportParser(), new FxCopRunner());
+	    analyse(context, new FxCopRulesetWriter(), new FxCopReportParser(), new FxCopBuilder());
 	  }
 
 	  @VisibleForTesting
-	  void analyse(SensorContext context, FxCopRulesetWriter writer, FxCopReportParser parser, FxCopRunner fxCopRunner) {
+	  void analyse(SensorContext context, FxCopRulesetWriter writer, FxCopReportParser parser, FxCopBuilder fxCopRunner) {
 	    fxCopConf.checkProperties(settings);
 
 	    File reportFile;
@@ -132,39 +137,44 @@ public class CSharpFxCopSensor implements Sensor {
 	    }
 	  }
 
-	private File runFxCop(FxCopRulesetWriter writer, FxCopRunner fxCopRunner) {
-		File reportFile;
+	private File runFxCop(@Nonnull FxCopRulesetWriter writer, @Nonnull FxCopBuilder fxCopBuilder) {
 		File rulesetFile = new File(fs.workDir(), "fxcop-sonarqube.ruleset");
 	      writer.write(enabledRuleConfigKeys(), rulesetFile);
 
-	      reportFile = new File(fs.workDir(), "fxcop-report.xml");
-
 	      String executable=settings.getString(fxCopConf.fxCopCmdPropertyKey());
-	      fxCopRunner.setExecutable(executable);
+	      fxCopBuilder.setExecutable(executable);
 	     
 	      String assembly=settings.getString(fxCopConf.assemblyPropertyKey());
-	      fxCopRunner.setAssemblies(assembly);
+	      fxCopBuilder.setAssemblies(assembly);
 	      
-	      fxCopRunner.setRulesetFile(rulesetFile);
-	      fxCopRunner.setReportFile(reportFile);
+	      fxCopBuilder.setRulesetFile(rulesetFile);
+	      
+	      File reportFile = new File(fs.workDir(), "fxcop-report.xml");
+	      fxCopBuilder.setReportFile(reportFile);
 	      
 	      int timeout=settings.getInt(fxCopConf.timeoutPropertyKey());
-	      fxCopRunner.setTimeout(timeout);
+	      fxCopBuilder.setTimeout(timeout);
 	      
 	      boolean isAspnet=settings.getBoolean(fxCopConf.aspnetPropertyKey());
-	      fxCopRunner.setAspnet(isAspnet);
+	      fxCopBuilder.setAspnet(isAspnet);
 	      
 	      List<String> directories=splitOnCommas(settings.getString(fxCopConf.directoriesPropertyKey()));
-	      fxCopRunner.setDirectories(directories);
+	      fxCopBuilder.setDirectories(directories);
 	      
 	      
 	      List<String> references=splitOnCommas(settings.getString(fxCopConf.referencesPropertyKey()));
-	      fxCopRunner.setReferences(references);
+	      fxCopBuilder.setReferences(references);
 	      
 	      String dictionaryPath=settings.getString(CSharpFxCopProvider.FXCOP_DICTIONARY_PROPERTY_KEY);
-	      fxCopRunner.setDictionary(dictionaryPath);
+	      fxCopBuilder.setDictionary(dictionaryPath);
 	      
-	      fxCopRunner.execute();
+	      Command command=fxCopBuilder.build();
+		    int exitCode = CommandExecutor.create().execute(
+		      command,
+		      TimeUnit.MINUTES.toMillis(timeout));
+		    Preconditions.checkState((exitCode & 1) == 0,
+		      "The execution of \"" + executable + "\" failed and returned " + exitCode
+		        + " as exit code. See http://msdn.microsoft.com/en-us/library/bb429400(v=vs.80).aspx for details.");
 		return reportFile;
 	}
 

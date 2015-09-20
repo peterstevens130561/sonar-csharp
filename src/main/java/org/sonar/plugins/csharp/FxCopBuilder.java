@@ -31,9 +31,9 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class FxCopRunner {
+public class FxCopBuilder {
 
-  private static final Logger LOG = LoggerFactory.getLogger(FxCopRunner.class);
+  private static final Logger LOG = LoggerFactory.getLogger(FxCopBuilder.class);
   private static final String EXECUTABLE = "FxCopCmd.exe";
   private String executable;
 private String assemblies;
@@ -81,6 +81,7 @@ private List<String> references;
 	  this.references = references;
   }
   
+  @Deprecated
   public void execute() {
 	  Command command=build();
     int exitCode = CommandExecutor.create().execute(
