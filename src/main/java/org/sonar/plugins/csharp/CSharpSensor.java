@@ -99,11 +99,12 @@ public class CSharpSensor implements Sensor {
 
   @Override
   public void analyse(Project project, SensorContext context) {
-    analyze();
+    analyze(project.getName(),project.getParent().getPath());
+    project.getParent().getPath();
     importResults(project, context);
   }
 
-  private void analyze() {
+  private void analyze(String projectName,String solutionParentPath) {
     StringBuilder sb = new StringBuilder();
     appendLine(sb, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     appendLine(sb, "<AnalysisInput>");
@@ -150,10 +151,11 @@ public class CSharpSensor implements Sensor {
     }
 
     File executableFile = extractor.executableFile();
-
     Command command = Command.create(executableFile.getAbsolutePath())
       .addArgument(analysisInput.getAbsolutePath())
-      .addArgument(analysisOutput.getAbsolutePath());
+      .addArgument(analysisOutput.getAbsolutePath())
+    	.addArgument(getSolutionPath(solutionParentPath))
+    	.addArgument(projectName);
 
     int exitCode = CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
     if (exitCode != 0) {
@@ -161,6 +163,12 @@ public class CSharpSensor implements Sensor {
     }
   }
 
+  private String getSolutionPath(String parentPath) {
+	  String solutionName=settings.getString("sonar.dotnet.visualstudio.solution.file");
+	  File baseDir=fs.baseDir();
+	  File solutionFile=new File(parentPath,solutionName);
+	  return solutionFile.getAbsolutePath().replaceAll("/", "\\\\");
+  }
   private static String escapeXml(String str) {
     return str.replace("&", "&amp;").replace("\"", "&quot;").replace("'", "&apos;").replace("<", "&lt;").replace(">", "&gt;");
   }

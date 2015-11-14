@@ -126,20 +126,24 @@ public class CSharpFxCopSensor implements Sensor {
 	      if (inputFile == null) {
 	        logSkippedIssueOutsideOfSonarQube(issue, file);
 	      } else if (fxCopConf.languageKey().equals(inputFile.language())) {
-	        Issuable issuable = perspectives.as(Issuable.class, inputFile);
-	        if (issuable == null) {
-	          logSkippedIssueOutsideOfSonarQube(issue, file);
-	        } else {
-	          issuable.addIssue(
-	            issuable.newIssueBuilder()
-	              .ruleKey(RuleKey.of(fxCopConf.repositoryKey(), ruleKey(issue.ruleConfigKey())))
-	              .line(issue.line())
-	              .message(issue.message())
-	              .build());
-	        }
+	        addIssue(issue, file, inputFile);
 	      }
 	    }
 	  }
+
+	private void addIssue(FxCopIssue issue, File file, InputFile inputFile) {
+		Issuable issuable = perspectives.as(Issuable.class, inputFile);
+		if (issuable == null) {
+		  logSkippedIssueOutsideOfSonarQube(issue, file);
+		} else {
+		  issuable.addIssue(
+		    issuable.newIssueBuilder()
+		      .ruleKey(RuleKey.of(fxCopConf.repositoryKey(), ruleKey(issue.ruleConfigKey())))
+		      .line(issue.line())
+		      .message(issue.message())
+		      .build());
+		}
+	}
 
 	private File runFxCop(@Nonnull FxCopRulesetWriter writer, @Nonnull FxCopBuilder fxCopBuilder) {
 		File rulesetFile = new File(fs.workDir(), "fxcop-sonarqube.ruleset");

@@ -2,9 +2,9 @@
 <sqale>
   <chc>
     <chc>
-      <key>LOGIC_RELIABILITY</key>
+      <key>READABILITY</key>
       <chc>
-        <rule-key>BHI1008</rule-key>
+        <rule-key>S3254</rule-key>
         <prop>
           <key>remediationFunction</key>
           <txt>CONSTANT_ISSUE</txt>
@@ -12,14 +12,14 @@
         <prop>
           <key>offset</key>
           <txt />
-          <val>5min</val>
+          <val>2min</val>
         </prop>
       </chc>
     </chc>
     <chc>
-      <key>LOGIC_RELIABILITY</key>
+      <key>READABILITY</key>
       <chc>
-        <rule-key>BHI1007</rule-key>
+        <rule-key>S3240</rule-key>
         <prop>
           <key>remediationFunction</key>
           <txt>CONSTANT_ISSUE</txt>
@@ -27,67 +27,7 @@
         <prop>
           <key>offset</key>
           <txt />
-          <val>5min</val>
-        </prop>
-      </chc>
-    </chc>
-    <chc>
-      <key>LOGIC_RELIABILITY</key>
-      <chc>
-        <rule-key>BHI1006</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <txt />
-          <val>1h</val>
-        </prop>
-      </chc>
-    </chc>
-    <chc>
-      <key>LOGIC_RELIABILITY</key>
-      <chc>
-        <rule-key>BHI1005</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <txt />
-          <val>1h</val>
-        </prop>
-      </chc>
-    </chc>
-    <chc>
-      <key>LOGIC_RELIABILITY</key>
-      <chc>
-        <rule-key>BHI1002</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <txt />
-          <val>5min</val>
-        </prop>
-      </chc>
-    </chc>
-    <chc>
-      <key>MAINTAINABILITY_COMPLIANCE</key>
-      <chc>
-        <rule-key>BHI1004</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <txt />
-          <val>5min</val>
+          <val>2min</val>
         </prop>
       </chc>
     </chc>
@@ -163,21 +103,6 @@
           <key>offset</key>
           <txt />
           <val>2min</val>
-        </prop>
-      </chc>
-    </chc>
-    <chc>
-      <key>ERRORS</key>
-      <chc>
-        <rule-key>BHI1000</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <txt />
-          <val>10min</val>
         </prop>
       </chc>
     </chc>
@@ -1429,21 +1354,6 @@
     <chc>
       <key>READABILITY</key>
       <chc>
-        <rule-key>BHI1001</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <txt />
-          <val>5min</val>
-        </prop>
-      </chc>
-    </chc>
-    <chc>
-      <key>READABILITY</key>
-      <chc>
         <rule-key>S101</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -1573,6 +1483,186 @@
           <key>offset</key>
           <txt />
           <val>20min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>LOGIC_RELIABILITY</key>
+      <chc>
+        <rule-key>BHI1008</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>5min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>LOGIC_RELIABILITY</key>
+      <chc>
+        <rule-key>BHI1002</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>5min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>MAINTAINABILITY_COMPLIANCE</key>
+      <chc>
+        <rule-key>BHI1004</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>5min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>READABILITY</key>
+      <chc>
+        <rule-key>BHI1009</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>1h</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>READABILITY</key>
+      <chc>
+        <rule-key>BHI1001</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>5min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>MAINTAINABILITY_COMPLIANCE</key>
+      <chc>
+        <rule-key>BHI1012</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>5min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>MAINTAINABILITY_COMPLIANCE</key>
+      <chc>
+        <rule-key>BHI1010</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>10min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>LOGIC_RELIABILITY</key>
+      <chc>
+        <rule-key>BHI1005</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>1h</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>LOGIC_RELIABILITY</key>
+      <chc>
+        <rule-key>BHI1006</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>1h</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>LOGIC_RELIABILITY</key>
+      <chc>
+        <rule-key>BHI1011</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>10min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>LOGIC_RELIABILITY</key>
+      <chc>
+        <rule-key>BHI1007</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>5min</val>
+        </prop>
+      </chc>
+    </chc>
+    <chc>
+      <key>ERRORS</key>
+      <chc>
+        <rule-key>BHI1000</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <txt />
+          <val>10min</val>
         </prop>
       </chc>
     </chc>
