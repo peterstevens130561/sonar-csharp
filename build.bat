@@ -18,5 +18,5 @@ cd %CURDIR%\%SONARLINT%\src\BHI.SonarLint.Descriptor\bin\Release
 BHI.SonarLint.Descriptor rules.xml profile.xml sqale.xml
 ROBOCOPY .  %CURDIR%\%CSHARP%\src\main\resources\org\sonar\plugins\csharp rules.xml profile.xml sqale.xml
 cd %CURDIR%\%CSHARP%
-mvn clean install -DskipTests=true
-COPY target/sonar-csharp-plugin.jar "C:/Program Files/SonarQube/sonarqube-5.1.2/extensions/plugins
+call mvn clean install -DskipTests=true
+COPY target/sonar-csharp-plugin.jar "C:/Program Files/SonarQube/sonarqube-5.1.2/extensions/plugins"
